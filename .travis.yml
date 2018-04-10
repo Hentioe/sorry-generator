@@ -6,8 +6,8 @@ go:
 before_install:
   - >-
     openssl aes-256-cbc 
-    -K $encrypted_xxxxxxxxxxxx_key 
-    -iv $encrypted_xxxxxxxxxxxx_iv 
+    -K $encrypted_b0ccc0a83fd8_key 
+    -iv $encrypted_b0ccc0a83fd8_iv 
     -in github_deploy_key.enc 
     -out github_deploy_key 
     -d
