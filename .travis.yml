@@ -11,7 +11,7 @@ install:
   
 script:
   - go build -o bin
-  - tar -zxvf sorry-gen.tar.gz ./bin ./resources
+  - tar -zcvf sorry-gen.tar.gz ./bin ./resources
 deploy:
   provider: releases
   api_key:
