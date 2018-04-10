@@ -19,6 +19,5 @@ func TestGeneratorToMp4(t *testing.T) {
 
 	if _, err := GeneratorToMp4(tplKey, subs); err != nil {
 		t.Error(err)
-
 	}
 }

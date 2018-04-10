@@ -10,8 +10,16 @@ type Subs struct {
 	subs []string
 }
 
-func (s *Subs) Append(sub string) *Subs {
-	s.subs = append(s.subs, sub)
+func (s *Subs) Append(sub interface{}) *Subs {
+	switch sub.(type) {
+	case string:
+		s.subs = append(s.subs, sub.(string))
+	case []string:
+		tmpSlice := sub.([]string)
+		for i := 0; i < len(tmpSlice); i++ {
+			s.subs = append(s.subs, tmpSlice[i])
+		}
+	}
 	return s
 }
 
