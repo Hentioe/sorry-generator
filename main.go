@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"github.com/emicklei/go-restful"
 	"net/http"
+	"flag"
 )
 
 func init() {
@@ -21,7 +22,11 @@ func init() {
 	}
 }
 
+
+var bind = flag.String("bind", ":8080", "Bind address and port")
+
 func main() {
+	flag.Parse()
 	wsContainer := restful.NewContainer()
 	wsContainer.Add(func() *restful.WebService {
 		var ws = new(restful.WebService)
@@ -54,6 +59,6 @@ func main() {
 
 	// Add container filter to respond to OPTIONS
 	wsContainer.Filter(wsContainer.OPTIONSFilter)
-	server := &http.Server{Addr: ":8080", Handler: wsContainer}
+	server := &http.Server{Addr: *bind, Handler: wsContainer}
 	log.Fatal(server.ListenAndServe())
 }
