@@ -13,6 +13,7 @@ RUN apt-get update && apt-get install -y ffmpeg \
     && mkdir -p $DIST_DIR \
     && wget $DL_ADDRESS -O "/data/$FILE_NAME" \
     && (cd /data && tar -zxvf $FILE_NAME) \
+    && rm "/data/$FILE_NAME" \
     && rm -rf /var/lib/apt/lists/* \
     && rm -rf /var/lib/apt/lists/partial/*
 
