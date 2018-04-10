@@ -24,7 +24,5 @@ script:
   - tar -zcvf sorry-gen.tar.gz ./bin ./resources
 deploy:
   provider: releases
-  api_key:
-    secure: travis setup releases
   file: sorry-gen.tar.gz
   skip_cleanup: true
