@@ -1,5 +1,6 @@
 # sorry-generator
 
+![](https://travis-ci.org/Hentioe/sorry-generator.svg?branch=master)
 ### 说明
 
 本项目为`Sorry-为所欲为`系列视频/GIF 生成器，一时兴起写的代码，GIF 部分暂时没做。配套前端：https://sorry.bluerain.io
