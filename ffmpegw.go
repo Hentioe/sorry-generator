@@ -9,7 +9,7 @@ import (
 )
 
 // ffmpeg CLI wrapper
-// ffmpeg -i <video_file> -vf ass=<ass_file> <output_file>
+// ffmpeg -i <video_file> -vf ass=<ass_file> -an <output_file>
 
 func GeneratorToMp4(tplKey string, subs Subs) (hash string, err error) {
 	tplPath := fmt.Sprintf("./resources/template/%s", tplKey)
