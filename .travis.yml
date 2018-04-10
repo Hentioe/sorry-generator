@@ -1,28 +1,22 @@
 language: go
-
 go:
-  - "1.10.x"
-  
+- 1.10.x
 before_install:
-  - >-
-    openssl aes-256-cbc 
-    -K $encrypted_b0ccc0a83fd8_key 
-    -iv $encrypted_b0ccc0a83fd8_iv 
-    -in github_deploy_key.enc 
-    -out github_deploy_key 
-    -d
-  - chmod 600 github_deploy_key
-  - eval $(ssh-agent -s)
-  - ssh-add github_deploy_key
-  - go get -u github.com/Masterminds/glide
-
+- openssl aes-256-cbc  -K $encrypted_b0ccc0a83fd8_key  -iv $encrypted_b0ccc0a83fd8_iv  -in
+  github_deploy_key.enc  -out github_deploy_key  -d
+- chmod 600 github_deploy_key
+- eval $(ssh-agent -s)
+- ssh-add github_deploy_key
+- go get -u github.com/Masterminds/glide
 install:
-  - glide install
-  
+- glide install
 script:
-  - go build -o bin
-  - tar -zcvf sorry-gen.tar.gz ./bin ./resources
+- go build -o bin
+- tar -zcvf sorry-gen.tar.gz ./bin ./resources
 deploy:
   provider: releases
+  api_key:
+    secure: GKDdAPPtvmwR+rs2df9hWbBRTrXzpfFcdFpJOrMjRHtfMYfyjqYI2Quc64TKhsI4/21G35JCvAfE1RB/8DaTl37n1LgwiCb2V+Om6hG/V8FxtCbGKQN6vIJSpSz821k8knO07T4tlSNguGKcIrFFx8bQWilApQEyj97MGHKZMtz3PN+j7o/qubGGY6UHW47yh4qINnkuDBh4untdc/4QBF5g8bQPZ74qOP0/eW9g35y047BlUOq+UOUjG3uTQ4Kh1F8avP8PrJrLcw7B2oBDiP1Pu82kpCkfoy8QKa+RrO544ZUmQuPt6Ge5xrcrwbJOL8/HGjBdQdLBZLSTYxYOabceGfJacAUCNvuucr7hGzmb3JlLQVaXZ1nAprK9VWyx6tftnvPgzlx1iQTfEhnYuHHBCG2zD3/b/+2emH/w/GHyEtuUU7pHYelouH7rSOT3rL9nVYbKdNe7Nm1AFUMMbT3PdtJ1smqf+kaJzXPnAwi22BS2vzopwc1hbKRDwT0IWs5e1RNjThr6XQ20J5xioG2fKaOgOJsV6RSYwwMJRzZO88HRY8FMSPx9rxoemFXrbmEMzy8Jrfo+x9ouoeB3Av5xKzbAEcNKN93STqmp2fkqiJmLSu5YtkEWO6IWW6yx6ilIWsh4f6ttV23kXHimBfGnLrnUunJ7kiWrgKESa2U=
   file: sorry-gen.tar.gz
-  skip_cleanup: true
+  on:
+    repo: Hentioe/sorry-generator
