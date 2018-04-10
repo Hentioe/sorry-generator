@@ -18,5 +18,6 @@ deploy:
   api_key:
     secure: GKDdAPPtvmwR+rs2df9hWbBRTrXzpfFcdFpJOrMjRHtfMYfyjqYI2Quc64TKhsI4/21G35JCvAfE1RB/8DaTl37n1LgwiCb2V+Om6hG/V8FxtCbGKQN6vIJSpSz821k8knO07T4tlSNguGKcIrFFx8bQWilApQEyj97MGHKZMtz3PN+j7o/qubGGY6UHW47yh4qINnkuDBh4untdc/4QBF5g8bQPZ74qOP0/eW9g35y047BlUOq+UOUjG3uTQ4Kh1F8avP8PrJrLcw7B2oBDiP1Pu82kpCkfoy8QKa+RrO544ZUmQuPt6Ge5xrcrwbJOL8/HGjBdQdLBZLSTYxYOabceGfJacAUCNvuucr7hGzmb3JlLQVaXZ1nAprK9VWyx6tftnvPgzlx1iQTfEhnYuHHBCG2zD3/b/+2emH/w/GHyEtuUU7pHYelouH7rSOT3rL9nVYbKdNe7Nm1AFUMMbT3PdtJ1smqf+kaJzXPnAwi22BS2vzopwc1hbKRDwT0IWs5e1RNjThr6XQ20J5xioG2fKaOgOJsV6RSYwwMJRzZO88HRY8FMSPx9rxoemFXrbmEMzy8Jrfo+x9ouoeB3Av5xKzbAEcNKN93STqmp2fkqiJmLSu5YtkEWO6IWW6yx6ilIWsh4f6ttV23kXHimBfGnLrnUunJ7kiWrgKESa2U=
   file: sorry-gen.tar.gz
+  name: Build $(date +'%d.%m.%Y %R')
   on:
     repo: Hentioe/sorry-generator
