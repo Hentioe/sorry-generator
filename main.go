@@ -27,6 +27,7 @@ var bind = flag.String("bind", ":8080", "Bind address and port")
 
 func main() {
 	flag.Parse()
+
 	wsContainer := restful.NewContainer()
 	wsContainer.Add(func() *restful.WebService {
 		var ws = new(restful.WebService)
@@ -47,18 +48,7 @@ func main() {
 		}))
 		return ws
 	}())
-	// Add container filter to enable CORS
-	cors := restful.CrossOriginResourceSharing{
-		ExposeHeaders:  []string{"*"},
-		AllowedHeaders: []string{"*"},
-		AllowedMethods: []string{"*"},
-		AllowedDomains: []string{"*"},
-		CookiesAllowed: false,
-		Container:      wsContainer}
-	wsContainer.Filter(cors.Filter)
 
-	// Add container filter to respond to OPTIONS
-	wsContainer.Filter(wsContainer.OPTIONSFilter)
 	server := &http.Server{Addr: *bind, Handler: wsContainer}
 	log.Fatal(server.ListenAndServe())
 }
