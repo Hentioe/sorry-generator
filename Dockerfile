@@ -9,11 +9,13 @@ ARG DL_ADDRESS="https://github.com/Hentioe/sorry-generator/releases/download/$TA
 ARG DIST_DIR=/data/dist
 
 
-RUN apt-get update && apt-get install -y ffmpeg \
+RUN apt-get update && apt-get install -y wget ffmpeg \
     && mkdir -p $DIST_DIR \
     && wget $DL_ADDRESS -O "/data/$FILE_NAME" \
     && (cd /data && tar -zxvf $FILE_NAME) \
+    && ln -s /data/bin /usr/bin/sorry-gen \
     && rm "/data/$FILE_NAME" \
+    && apt-get purge -y wget \
     && rm -rf /var/lib/apt/lists/* \
     && rm -rf /var/lib/apt/lists/partial/*
 
@@ -24,4 +26,4 @@ WORKDIR /data
 EXPOSE 8080
 
 
-ENTRYPOINT ["sorry-gen"]
+ENTRYPOINT ["bash"]
