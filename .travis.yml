@@ -12,6 +12,7 @@ install:
 - glide install
 script:
 - go build -o bin
+before_deploy:
 - tar -zcvf sorry-gen.tar.gz ./bin ./resources
 deploy:
   provider: releases
