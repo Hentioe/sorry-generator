@@ -17,7 +17,7 @@ docker run -ti --name sorry-gen \
 bluerain/sorry-generator
 ````
 
-POST 以下数据到 http://localhost:4008/generate/sorry:
+POST 以下数据到 `http://localhost:4008/generate/sorry`:
 
 ````
 {"sentences":["第一句","第二句","第三句","第四句","第五句","第六句","第七句","第八句","第九句"]}
