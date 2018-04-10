@@ -1,4 +1,4 @@
-FROM ubuntu:16.04
+FROM jrottenberg/ffmpeg:3.3
 
 
 ARG TAG=latest
@@ -9,7 +9,7 @@ ARG DL_ADDRESS="https://github.com/Hentioe/sorry-generator/releases/download/$TA
 ARG DIST_DIR=/data/dist
 
 
-RUN apt-get update && apt-get install -y wget ffmpeg \
+RUN apt-get install -y wget ttf-wqy-microhei \
     && mkdir -p $DIST_DIR \
     && wget $DL_ADDRESS -O "/data/$FILE_NAME" \
     && (cd /data && tar -zxvf $FILE_NAME) \
@@ -26,4 +26,4 @@ WORKDIR /data
 EXPOSE 8080
 
 
-ENTRYPOINT ["bash"]
+ENTRYPOINT ["sorry-gen"]
