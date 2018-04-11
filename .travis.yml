@@ -20,4 +20,4 @@ deploy:
   file:
     - sorry-gen.tar.gz
   on:
-    repo: Hentioe/sorry-generator
+    tags: true
