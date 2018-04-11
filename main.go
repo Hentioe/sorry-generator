@@ -22,7 +22,6 @@ func init() {
 	}
 }
 
-
 var bind = flag.String("bind", ":8080", "Bind address and port")
 
 func main() {
@@ -32,13 +31,14 @@ func main() {
 	wsContainer.Add(func() *restful.WebService {
 		var ws = new(restful.WebService)
 		ws.Path("/")
-		ws.Route(ws.POST("/generate/{tplKey}").To(func(request *restful.Request, response *restful.Response) {
+		ws.Route(ws.POST("/generate/{tplKey}/{resType}").To(func(request *restful.Request, response *restful.Response) {
 			tplKey := request.PathParameter("tplKey")
+			resType := request.PathParameter("resType")
 			body := map[string][]string{}
 			request.ReadEntity(&body)
 			subs := Subs{}
 			subs.Append(body["sentences"])
-			if hash, err := GeneratorToMp4(tplKey, subs); err != nil {
+			if hash, err := GenerateResource(tplKey, subs, resType); err != nil {
 				response.WriteError(500, err)
 			} else {
 				response.WriteAsJson(map[string]string{

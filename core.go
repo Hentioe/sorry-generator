@@ -27,7 +27,7 @@ func (s *Subs) EntrySet() []string {
 	return s.subs
 }
 
-func (s *Subs) Hash() string {
-	md5Buf := md5.Sum([]byte(strings.Join(s.EntrySet(), ",")))
+func (s *Subs) Hash(prefix string) string {
+	md5Buf := md5.Sum([]byte(prefix + strings.Join(s.EntrySet(), ",")))
 	return fmt.Sprintf("%x", md5Buf[:])
 }

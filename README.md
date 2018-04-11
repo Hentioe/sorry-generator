@@ -3,7 +3,7 @@
 ![](https://travis-ci.org/Hentioe/sorry-generator.svg?branch=master)
 ### 说明
 
-本项目为`Sorry-为所欲为`系列视频/GIF 生成器，一时兴起写的代码，GIF 部分暂时没做。配套前端：https://sorry.bluerain.io
+本项目为`Sorry-为所欲为`系列视频/GIF 生成器，配套前端：https://sorry.bluerain.io
 
 PS：灵感和资源模板来自 [xtyxtyx/sorry](https://github.com/xtyxtyx/sorry) 感谢：）
 
@@ -18,7 +18,7 @@ docker run -ti --name sorry-gen \
 bluerain/sorry-generator
 ````
 
-POST 以下数据到 `http://localhost:4008/generate/sorry`:
+POST 以下数据到 `http://localhost:4008/generate/sorry/mp4`:
 
 ````
 {"sentences":["第一句","第二句","第三句","第四句","第五句","第六句","第七句","第八句","第九句"]}
@@ -34,6 +34,8 @@ POST 以下数据到 `http://localhost:4008/generate/sorry`:
 
 同时会在 /data/apps/sorry-generator/dist 目录下生成对应 hash 作为文件名的文件（没有后缀的为 ass 字幕文件）。
 
+注：修改 generate API 的最后一个 path 参数 mp4 为 gif 即产生 gif 文件。
+
 假设你这样配置 nginx:
 
 ````
@@ -47,7 +49,7 @@ server {
         }
 }
 ````
-那么就可以直接提供生成文件的直链了：http://your.domain/dist/${hash}.mp4
+那么就可以直接提供生成文件的直链了：http://your.domain/dist/$hash.[mp4|gif]
 
 附加说明：
 

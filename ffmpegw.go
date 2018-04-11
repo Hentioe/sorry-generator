@@ -6,19 +6,26 @@ import (
 	"io/ioutil"
 	"html/template"
 	"os"
+	"errors"
 )
 
-// ffmpeg CLI wrapper
-// ffmpeg -i <video_file> -vf ass=<ass_file> -an <output_file>
+func MakeGif(tplKey string, subs Subs) (string, error) {
+	return GenerateResource(tplKey, subs, "gif")
+}
+func MakeMp4(tplKey string, subs Subs) (string, error) {
+	return GenerateResource(tplKey, subs, "mp4")
+}
 
-func GeneratorToMp4(tplKey string, subs Subs) (hash string, err error) {
+// GenerateResource Generate resources(gif/mp4)
+// ffmpeg CLI wrapper
+func GenerateResource(tplKey string, subs Subs, resType string) (hash string, err error) {
 	tplPath := fmt.Sprintf("./resources/template/%s", tplKey)
 	videoTplFile := tplPath + "/template.mp4"
 	subTplFile := tplPath + "/template.ass"
-	hash = subs.Hash()
+	hash = subs.Hash(tplKey)
 	subOutputFile := fmt.Sprintf("./dist/%s", hash)
-	videoOutputFile := "dist/" + hash + ".mp4"
-	if _, err = os.Stat(videoOutputFile); os.IsNotExist(err) {
+	outputResource := "dist/" + hash + "." + resType
+	if _, err = os.Stat(outputResource); os.IsNotExist(err) {
 		tplText := ""
 		if tmpBuf, err := ioutil.ReadFile(subTplFile); err != nil {
 			return hash, err
@@ -40,10 +47,21 @@ func GeneratorToMp4(tplKey string, subs Subs) (hash string, err error) {
 				}
 			}
 		}
-		cmd := exec.Command("ffmpeg", "-i", videoTplFile,
-			"-vf", fmt.Sprintf("ass=%s", subOutputFile),
-			"-an",
-			videoOutputFile)
+		var cmd = &exec.Cmd{}
+		switch resType {
+		case "gif":
+			cmd = exec.Command("ffmpeg", "-i", videoTplFile,
+				"-vf", fmt.Sprintf("ass=%s,scale=300:-1", subOutputFile),
+				"-r", "8",
+				"-y", outputResource)
+		case "mp4":
+			cmd = exec.Command("ffmpeg", "-i", videoTplFile,
+				"-vf", fmt.Sprintf("ass=%s", subOutputFile),
+				"-an",
+				"-y", outputResource)
+		default:
+			return "", errors.New("Unknown resType: " + resType)
+		}
 		if _, err := cmd.CombinedOutput(); err != nil {
 			return hash, err
 		}

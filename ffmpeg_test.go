@@ -17,7 +17,10 @@ func TestGeneratorToMp4(t *testing.T) {
 		Append("以后天天找他 BUG").
 		Append("天天找 天天找")
 
-	if _, err := GeneratorToMp4(tplKey, subs); err != nil {
+	if _, err := MakeMp4(tplKey, subs); err != nil {
+		t.Error(err)
+	}
+	if _, err := MakeGif(tplKey, subs); err != nil {
 		t.Error(err)
 	}
 }
