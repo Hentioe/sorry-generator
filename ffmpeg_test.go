@@ -5,12 +5,14 @@ import (
 )
 
 func TestGeneratorResource(t *testing.T) {
-	tplKey := "wangjingze"
+	tplKey := "dagong"
 	subs := Subs{}
-	subs.Append("我王境泽就是饿死").
-		Append("死外边，从这里跳下去").
-		Append("不会吃你们一点东西").
-		Append("真香")
+	subs.Append("没有钱啊肯定要做啊").
+		Append("不做的话又没有钱用").
+		Append("那你不会打工啊").
+		Append("有手有脚的").
+		Append("打工是不可能打工的").
+		Append("这辈子不可能打工的")
 
 	if _, err := MakeMp4(tplKey, subs); err != nil {
 		t.Error(err)
