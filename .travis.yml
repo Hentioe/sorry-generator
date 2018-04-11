@@ -11,8 +11,7 @@ before_install:
 install:
 - glide install
 script:
-- go build -o bin
-- tar -zcvf sorry-gen.tar.gz ./bin ./resources
+- ./scriptw pack
 deploy:
   provider: releases
   api_key:
@@ -20,6 +19,6 @@ deploy:
   overwrite: true
   name: $TRAVIS_TAG
   file_glob: true
-  file: "*.tar.gz"
+  file: "build/*.tar.gz"
   on:
     tags: true
