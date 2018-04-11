@@ -4,18 +4,13 @@ import (
 	"testing"
 )
 
-func TestGeneratorToMp4(t *testing.T) {
-	tplKey := "sorry"
+func TestGeneratorResource(t *testing.T) {
+	tplKey := "wangjingze"
 	subs := Subs{}
-	subs.Append("好啊").
-		Append("就算你是一流程序员").
-		Append("写出来的代码再完美").
-		Append("我说这是 BUG 它就是 BUG").
-		Append("毕竟我是用户").
-		Append("你害我加班啊").
-		Append("sorry 我就喜欢看程序猿加班").
-		Append("以后天天找他 BUG").
-		Append("天天找 天天找")
+	subs.Append("我王境泽就是饿死").
+		Append("死外边，从这里跳下去").
+		Append("不会吃你们一点东西").
+		Append("真香")
 
 	if _, err := MakeMp4(tplKey, subs); err != nil {
 		t.Error(err)

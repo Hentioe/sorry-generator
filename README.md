@@ -34,7 +34,7 @@ POST 以下数据到 `http://localhost:4008/generate/sorry/mp4`:
 
 同时会在 /data/apps/sorry-generator/dist 目录下生成对应 hash 作为文件名的文件（没有后缀的为 ass 字幕文件）。
 
-注：修改 generate API 的最后一个 path 参数 mp4 为 gif 即产生 gif 文件。
+注：修改 generate API 的最后一个 path 参数 mp4 为 gif 即产生 gif 文件。修改 sorry 为其它资源（例如王境泽：wangjingze）则产生相对应的资源。
 
 假设你这样配置 nginx:
 
