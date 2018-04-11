@@ -1,7 +1,7 @@
 FROM jrottenberg/ffmpeg:3.3
 
 
-ARG TAG=0.1.2
+ARG TAG=0.1.2-1
 ARG FILE_NAME=sorry-gen.tar.gz
 ARG DL_ADDRESS="https://github.com/Hentioe/sorry-generator/releases/download/$TAG/$FILE_NAME"
 
