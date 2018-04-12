@@ -1,6 +1,10 @@
 # sorry-generator
 
-![](https://travis-ci.org/Hentioe/sorry-generator.svg?branch=master)
+![Travis](https://travis-ci.org/Hentioe/sorry-generator.svg?branch=master)
+![GitHub release](https://img.shields.io/github/release/Hentioe/sorry-generator.svg)
+![Docker Automated build](https://img.shields.io/docker/build/bluerain/sorry-generator.svg)
+
+
 ### 说明
 
 本项目为`Sorry-为所欲为`系列视频/GIF 生成器，配套前端：https://sorry.bluerain.io
@@ -63,16 +67,19 @@ GET 访问首页 `http://localhost:4008`:
   "res": [
    {
     "tpl_key": "dagong",
+    "name": "窃格瓦拉-打工是不可能……",
     "sentences": [],
     "sentences_count": 6
    },
    {
     "tpl_key": "sorry",
+    "name": "为所欲为",
     "sentences": [],
     "sentences_count": 9
    },
    {
     "tpl_key": "wangjingze",
+    "name": "王境泽-真香",
     "sentences": [],
     "sentences_count": 4
    }
@@ -87,6 +94,7 @@ GET 访问首页 `http://localhost:4008`:
 ````
 {
   "tpl_key": "sorry",
+  "name": "为所欲为",
   "sentences": [],
   "sentences_count": 9
  }
@@ -100,7 +108,9 @@ GET 访问首页 `http://localhost:4008`:
 
 ### 申请添加
 
-如果你有好的片段模板视频，欢迎来这里投稿，直接去开 Issue 即可：
+自行上传的功能将在下一个版本进行实现，不过现在你仍然可以通过投稿的方式请求新增需要的模板资源。
+
+欢迎来这里投稿，直接去开 Issue 即可：
 
 1. 标题为「建议添加 XX」。内容附上视频链接（如果是下载链接更好）、开始-结束时间段。
 2. 标题为「希望添加 XX」。内容为视频片段的简短描述，上传视频附件（尺寸无所谓，我会自行会压缩）
@@ -109,13 +119,13 @@ GET 访问首页 `http://localhost:4008`:
 
 ### 版本功能计划
 
-- [x] 0.1: 实现基本功能
-- [x] 0.2: 添加基于对模板资源扫描产生数据的查询相关的 API
-- [ ] 0.3: 程序本体和模板资源分离
-- [ ] 0.4: 提供上传接口并持久化储存新增的模板（固定结构的压缩包资源）
-- [ ] 1.0: 异步支持，对资源的生成请求立即响应，并提供查询接口返回任务实时状态
-- [ ] 1.1: 回调支持，异步生成请求的任务完成主动触发 HookUrl
-- [ ] 1.2: 基于可控长度队列任务控制并发
+- [x] v0.1: 实现基本功能
+- [x] v0.2: 添加基于对模板资源扫描产生数据的查询相关的 API
+- [ ] v0.3: 程序本体和模板资源分离
+- [ ] v0.4: 提供上传接口并持久化储存新增的模板（固定结构的压缩包资源）
+- [ ] v1.0: 异步支持，对资源的生成请求立即响应，并提供查询接口返回任务实时状态
+- [ ] v1.1: 回调支持，异步生成请求的任务完成主动触发 HookUrl
+- [ ] v1.2: 基于可控长度队列任务控制并发
 
 ___
 
