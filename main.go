@@ -31,21 +31,40 @@ func main() {
 	wsContainer.Add(func() *restful.WebService {
 		var ws = new(restful.WebService)
 		ws.Path("/")
-		ws.Route(ws.POST("/generate/{tplKey}/{resType}").To(func(request *restful.Request, response *restful.Response) {
-			tplKey := request.PathParameter("tplKey")
-			resType := request.PathParameter("resType")
-			body := map[string][]string{}
-			request.ReadEntity(&body)
-			subs := Subs{}
-			subs.Append(body["sentences"])
-			if hash, err := GenerateResource(tplKey, subs, resType); err != nil {
+		ws.Route(ws.GET("/").To(func(request *restful.Request, response *restful.Response) {
+			if res,err := ScanAllTemplate();err!= nil {
 				response.WriteError(500, err)
-			} else {
-				response.WriteAsJson(map[string]string{
-					"hash": hash,
+			}else{
+				response.WriteAsJson(map[string]interface{}{
+					"res_count": len(res),
+					"res":       res,
 				})
 			}
 		}))
+		ws.Route(ws.GET("/info/{tplKey}").To(func(request *restful.Request, response *restful.Response) {
+			tplKey := request.PathParameter("tplKey")
+			if r, err := ScanTemplate(tplKey); err != nil {
+				response.WriteError(500, err)
+			} else {
+				response.WriteAsJson(r)
+			}
+		}))
+		ws.Route(
+			ws.POST("/generate/{tplKey}/{resType}").To(func(request *restful.Request, response *restful.Response) {
+				tplKey := request.PathParameter("tplKey")
+				resType := request.PathParameter("resType")
+				body := map[string][]string{}
+				request.ReadEntity(&body)
+				subs := Subs{}
+				subs.Append(body["sentences"])
+				if hash, err := GenerateResource(tplKey, subs, resType); err != nil {
+					response.WriteError(500, err)
+				} else {
+					response.WriteAsJson(map[string]string{
+						"hash": hash,
+					})
+				}
+			}))
 		return ws
 	}())
 
