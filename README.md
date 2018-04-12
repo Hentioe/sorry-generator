@@ -51,6 +51,47 @@ server {
 ````
 那么就可以直接提供生成文件的直链了：http://your.domain/dist/$hash.[mp4|gif]
 
+
+对模板资源的数据进行查询：
+
+我的前端（或者其它程序）该怎么知道某个资源有多少条字幕句子？
+
+GET 访问首页 `http://localhost:4008`:
+
+````
+{
+  "res": [
+   {
+    "tpl_key": "dagong",
+    "sentences": [],
+    "sentences_count": 6
+   },
+   {
+    "tpl_key": "sorry",
+    "sentences": [],
+    "sentences_count": 9
+   },
+   {
+    "tpl_key": "wangjingze",
+    "sentences": [],
+    "sentences_count": 4
+   }
+  ],
+  "res_count": 3
+ }
+````
+会得到一个 res 数组，其中 tpl_key 就是模板名称，也就是上面的 sorry。sentences_count 表示有多少条字幕（需要输入多少句子）。sentences 数组是预设在程序中的默认字幕（用处例如提供前端输入框默认的 plachholder 的值）。以上所有数据都是程序扫描资源目录产生的结果，没有任何数据库成分。所以只要添加新的资源模板，API 结果会自动变更。
+
+也可以 GET 访问 `http://localhost:4008/info/{tpl_key}` 对单独的资源进行数据查询：
+
+````
+{
+  "tpl_key": "sorry",
+  "sentences": [],
+  "sentences_count": 9
+ }
+````
+
 附加说明：
 
 * 为什么不加入前端？
