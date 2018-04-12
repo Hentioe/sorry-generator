@@ -1,8 +1,8 @@
 # sorry-generator
 
 ![Travis](https://travis-ci.org/Hentioe/sorry-generator.svg?branch=master)
-![GitHub release](https://img.shields.io/github/release/qubyte/rubidium.svg)
-![Docker Automated build](https://img.shields.io/docker/automated/jrottenberg/ffmpeg.svg)
+![GitHub release](https://img.shields.io/github/release/Hentioe/sorry-generator.svg)
+![Docker Automated build](https://img.shields.io/docker/build/bluerain/sorry-generator.svg)
 
 
 ### 说明
