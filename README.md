@@ -1,6 +1,10 @@
 # sorry-generator
 
-![](https://travis-ci.org/Hentioe/sorry-generator.svg?branch=master)
+![Travis](https://travis-ci.org/Hentioe/sorry-generator.svg?branch=master)
+![GitHub release](https://img.shields.io/github/release/qubyte/rubidium.svg)
+![Docker Automated build](https://img.shields.io/docker/automated/jrottenberg/ffmpeg.svg)
+
+
 ### 说明
 
 本项目为`Sorry-为所欲为`系列视频/GIF 生成器，配套前端：https://sorry.bluerain.io
