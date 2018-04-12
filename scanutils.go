@@ -10,6 +10,7 @@ import (
 
 type ResInfo struct {
 	TplKey         string   `json:"tpl_key"`
+	Name           string   `json:"name"`
 	Sentences      []string `json:"sentences"`
 	SentencesCount int      `json:"sentences_count"`
 }
@@ -71,6 +72,18 @@ func ScanTemplate(tplKey string) (ri ResInfo, err error) {
 				results = []string{}
 			}
 			ri.Sentences = results[:ri.SentencesCount]
+		}
+	}
+
+	// 读取 name 属性
+	nameFilePath := fmt.Sprintf("%s/%s", basePath, "name")
+	if exist, _ := IsExist(nameFilePath); !exist {
+		ri.Name = ri.TplKey
+	} else {
+		if tmpBuf, err := ioutil.ReadFile(nameFilePath); err != nil {
+			return ri, err
+		} else {
+			ri.Name = string(tmpBuf)
 		}
 	}
 
