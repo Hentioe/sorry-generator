@@ -63,16 +63,19 @@ GET 访问首页 `http://localhost:4008`:
   "res": [
    {
     "tpl_key": "dagong",
+    "name": "窃格瓦拉-打工是不可能……",
     "sentences": [],
     "sentences_count": 6
    },
    {
     "tpl_key": "sorry",
+    "name": "为所欲为",
     "sentences": [],
     "sentences_count": 9
    },
    {
     "tpl_key": "wangjingze",
+    "name": "王境泽-真香",
     "sentences": [],
     "sentences_count": 4
    }
@@ -87,6 +90,7 @@ GET 访问首页 `http://localhost:4008`:
 ````
 {
   "tpl_key": "sorry",
+  "name": "为所欲为",
   "sentences": [],
   "sentences_count": 9
  }
