@@ -8,6 +8,10 @@ import (
 	"strings"
 )
 
+var (
+	NotFoundTemplateProperties = errors.New("not found any .sentences template")
+)
+
 type ResInfo struct {
 	TplKey         string   `json:"tpl_key"`
 	Name           string   `json:"name"`
@@ -50,7 +54,7 @@ func ScanTemplate(tplKey string) (ri ResInfo, err error) {
 		} else {
 			results := reg.FindAllString(tmpAssContent, -1)
 			if results == nil {
-				return ri, errors.New("Not find .sentences template")
+				return ri, NotFoundTemplateProperties
 			} else {
 				ri.SentencesCount = len(results)
 			}

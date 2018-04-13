@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+BIN_NAME=sorry-gen
+
 if [ "$#" -ne 1 ]
 then
     echo -e "   Please add a argument"
@@ -11,10 +13,10 @@ if [ "$1" == 'pack' ]
 then
     if [ -e ./build ];then "$0" clean ;fi
     mkdir build
-    go build -o bin
-    tar -zcvf sorry-gen.tar.gz bin ./resources
+    go build -ldflags "-s -w" -o "$BIN_NAME"
+    tar -zcvf sorry-gen.tar.gz "$BIN_NAME"
     mv sorry-gen.tar.gz build/
-    rm bin
+    rm "$BIN_NAME"
 fi
 if [ "$1" == 'clean' ]
 then

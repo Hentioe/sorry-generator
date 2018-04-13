@@ -15,26 +15,33 @@ func init() {
 		log.Fatal(err)
 	} else {
 		distDir := parentPath + "/dist"
-		if _, err := os.Stat(distDir); os.IsNotExist(err) {
-			fmt.Println(distDir)
-			os.Mkdir(distDir, os.FileMode(0774))
-		}
+		resourcesDir := parentPath + "/resources"
+		IfNotExistMkAllMir(0774, distDir, resourcesDir)
 	}
 }
 
 var bind = flag.String("bind", ":8080", "Bind address and port")
+var installRes = flag.String("i", "", "Install resources for a zip file")
 
 func main() {
 	flag.Parse()
+	if *installRes != "" {
+		if _, err := Unzip(*installRes, "./resources"); err != nil {
+			fmt.Printf("install resources failed, %s\n", err)
+			os.Exit(1)
+		}
+		fmt.Println("install resources succcess!")
+		os.Exit(0)
+	}
 
 	wsContainer := restful.NewContainer()
 	wsContainer.Add(func() *restful.WebService {
 		var ws = new(restful.WebService)
 		ws.Path("/")
 		ws.Route(ws.GET("/").To(func(request *restful.Request, response *restful.Response) {
-			if res,err := ScanAllTemplate();err!= nil {
+			if res, err := ScanAllTemplate(); err != nil {
 				response.WriteError(500, err)
-			}else{
+			} else {
 				response.WriteAsJson(map[string]interface{}{
 					"res_count": len(res),
 					"res":       res,
