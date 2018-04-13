@@ -18,7 +18,7 @@ PS：灵感和资源模板来自 [xtyxtyx/sorry](https://github.com/xtyxtyx/sorr
 ```` bash
 docker run -ti --name sorry-gen \
 -d -p 4008:8080 --restart=always \
--v /data/apps/sorry-generator/dist:/data/resources \
+-v /data/apps/sorry-generator/resources:/data/resources \
 -v /data/apps/sorry-generator/dist:/data/dist \
 bluerain/sorry-generator
 ````
