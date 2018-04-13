@@ -124,18 +124,18 @@ GET 访问首页 `http://localhost:4008`:
   执行命令：`./sorry-gen -i res.zip`即可完成对资源包的安装，资源包的结构见上述说明。资源包中的任何文件都不会对已存在的资源文件进行替换，如果要更新指定资源请先删除相关目录再执行安装。
 
 
-在手动编译运行的情况下，默认是没有资源包的，你可以拉取并安装我的资源包：
+  在手动编译运行的情况下，默认是没有资源包的，你可以拉取并安装我的资源包：
 
-````
-wget https://dl.bluerain.io/res.zip
-./sorry-gen -i res.zip
-````
+  ````
+  wget https://dl.bluerain.io/res.zip
+  ./sorry-gen -i res.zip
+  ````
 
-Docker 中镜像默认拉取的即是我的资源包。同样的，使用 sorry-generator 也可以安装资源包：
+  Docker 中镜像默认拉取的即是我的资源包。同样的，使用 sorry-generator 也可以安装资源包：
 
-````
-docker run -ti --rm -v $PWD:/data bluerain/sorry-generator -i res.zip
-````
+  ````
+  docker run -ti --rm -v $PWD:/data bluerain/sorry-generator -i res.zip
+  ````
 
 ### 申请添加
 
