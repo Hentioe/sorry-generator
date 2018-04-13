@@ -18,6 +18,7 @@ PS：灵感和资源模板来自 [xtyxtyx/sorry](https://github.com/xtyxtyx/sorr
 ```` bash
 docker run -ti --name sorry-gen \
 -d -p 4008:8080 --restart=always \
+-v /data/apps/sorry-generator/dist:/data/resources \
 -v /data/apps/sorry-generator/dist:/data/dist \
 bluerain/sorry-generator
 ````
@@ -100,11 +101,41 @@ GET 访问首页 `http://localhost:4008`:
  }
 ````
 
+资源目录结构说明（以 resources 为根）：
+
+````
+.
+└── template
+    ├── dagong              # 模板 key
+        ├── name            # 模板显示名称（文本文件）
+        ├── sentences       # 预设字幕（文本文件，每一行表示一句字幕）
+        ├── template.ass    # 字幕模板
+        └── template.mp4    # 视频素材模板（实际上就是无字幕的原视频）
+````
+
 附加说明：
 
 * 为什么不加入前端？
   
   因为这种东西本来就没必要限制为 Web 前端啊…… 需要前端自己写个静态页面即可。实际上应该将它视作任何 Programmably 项目的后端，例如各种平台的 Bot
+
+* 如何手动安装资源？
+  
+  执行命令：`./sorry-gen -i res.zip`即可完成对资源包的安装，资源包的结构见上述说明。资源包中的任何文件都不会对已存在的资源文件进行替换，如果要更新指定资源请先删除相关目录再执行安装。
+
+
+在手动编译运行的情况下，默认是没有资源包的，你可以拉取并安装我的资源包：
+
+````
+wget https://dl.bluerain.io/res.zip
+./sorry-gen -i res.zip
+````
+
+Docker 中镜像默认拉取的即是我的资源包。同样的，使用 sorry-generator 也可以安装资源包：
+
+````
+docker run -ti --rm -v $PWD:/data bluerain/sorry-generator -i res.zip
+````
 
 ### 申请添加
 
@@ -121,7 +152,7 @@ GET 访问首页 `http://localhost:4008`:
 
 - [x] v0.1: 实现基本功能
 - [x] v0.2: 添加基于对模板资源扫描产生数据的查询相关的 API
-- [ ] v0.3: 程序本体和模板资源分离
+- [x] v0.3: 程序本体和模板资源分离
 - [ ] v0.4: 提供上传接口并持久化储存新增的模板（固定结构的压缩包资源）
 - [ ] v1.0: 异步支持，对资源的生成请求立即响应，并提供查询接口返回任务实时状态
 - [ ] v1.1: 回调支持，异步生成请求的任务完成主动触发 HookUrl

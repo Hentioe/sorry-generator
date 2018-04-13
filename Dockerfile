@@ -15,7 +15,7 @@ RUN apt-get install -y wget ttf-wqy-microhei \
     && mkdir -p $DIST_DIR \
     && wget $DL_ADDRESS -O "/data/$FILE_NAME" \
     && (cd /data && tar -zxvf $FILE_NAME) \
-    && ln -s /data/bin /usr/bin/sorry-gen \
+    && ln -s /data/sorry-gen /usr/bin/sorry-gen \
     && rm "/data/$FILE_NAME" \
     && wget $REMOTE_RES -O /data/res.zip && sorry-gen -i res.zip \
     && apt-get purge -y wget \
