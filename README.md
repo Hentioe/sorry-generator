@@ -222,7 +222,7 @@ Dialogue: 0,0:00:13.81,0:00:16.31,sorry,,0,0,0,,{{ index .sentences 6 }}
 Dialogue: 0,0:00:18.06,0:00:19.56,sorry,,0,0,0,,{{ index .sentences 7 }}
 Dialogue: 0,0:00:19.60,0:00:21.60,sorry,,0,0,0,,{{ index .sentences 8 }}
 ````
-sentence 的内容为：
+sentences 的内容为：
 
 ````
 好啊
