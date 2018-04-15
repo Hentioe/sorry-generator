@@ -12,7 +12,7 @@ import (
 	"io/ioutil"
 )
 
-func Unzip(src string, dest string) ([]string, error) {
+func InstallZip(src string, dest string) ([]string, error) {
 
 	var fileNames []string
 

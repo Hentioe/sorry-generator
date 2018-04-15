@@ -115,6 +115,40 @@ GET 访问首页 `http://localhost:4008`:
         └── template.mp4    # 视频素材模板（实际上就是无字幕的原视频）
 ````
 
+上传资源包 API（将 res.zip 放置在 ./assets 目录中）:
+
+````
+curl -X POST http://localhost:8080/upload/res \
+  -F "file=@./assets/res.zip" \
+  -H "Content-Type: multipart/form-data"
+````
+
+上传完成后会自动进行资源包的安装。安装成功会返回安装生成的文件列表，例如：
+
+````
+{
+    "make_files": [
+        "resources/template",
+        "resources/template/sorry",
+        "resources/template/sorry/template.ass",
+        "resources/template/sorry/template.mp4",
+        "resources/template/lese",
+        "resources/template/lese/template.ass",
+        "resources/template/lese/template.mp4",
+        "resources/template/wangjingze",
+        "resources/template/wangjingze/template.ass",
+        "resources/template/wangjingze/template.mp4",
+        "resources/template/dagong",
+        "resources/template/dagong/template.ass",
+        "resources/template/dagong/template.mp4"
+    ]
+}
+````
+
+如果安装的资源包中的资源已经存在，则不会生成任何文件（在安装资源包章节有详细描述）。假设上传的资源包中仅仅只有一个 sorry 资源，
+在已经存在 sorry 的情况下，API 会返回一个空的 make_files。
+
+
 附加说明：
 
 * 为什么不加入前端？
@@ -271,7 +305,7 @@ PS: 有关视频字幕的创建建议了解一下 [Aegisub](http://www.aegisub.o
 - [x] v0.1: 实现基本功能
 - [x] v0.2: 添加基于对模板资源扫描产生数据的查询相关的 API
 - [x] v0.3: 程序本体和模板资源分离
-- [ ] v0.4: 提供上传接口并持久化储存新增的模板（固定结构的压缩包资源）
+- [x] v0.4: 提供上传接口并持久化储存新增的模板（固定结构的压缩包资源）
 - [ ] v1.0: 异步支持，对资源的生成请求立即响应，并提供查询接口返回任务实时状态
 - [ ] v1.1: 回调支持，异步生成请求的任务完成主动触发 HookUrl
 - [ ] v1.2: 基于可控长度队列任务控制并发

@@ -15,7 +15,8 @@ func init() {
 	} else {
 		distDir := parentPath + "/dist"
 		resourcesDir := parentPath + "/resources"
-		if err := IfNotExistMkAllMir(0774, distDir, resourcesDir);err!= nil{
+		tmpDir := parentPath + "/tmp"
+		if err := IfNotExistMkAllMir(0774, distDir, resourcesDir, tmpDir); err != nil {
 			log.Fatal(err)
 		}
 	}
@@ -28,7 +29,7 @@ var mode = flag.String("mode", "test", "Running mode, e.g. debug/test/release")
 func main() {
 	flag.Parse()
 	if *installRes != "" {
-		if _, err := Unzip(*installRes, "./resources"); err != nil {
+		if _, err := InstallZip(*installRes, "./resources"); err != nil {
 			fmt.Printf("install template resources failed, %s\n", err)
 			os.Exit(1)
 		}

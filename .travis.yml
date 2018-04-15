@@ -7,9 +7,8 @@ before_install:
 - chmod 600 github_deploy_key
 - eval $(ssh-agent -s)
 - ssh-add github_deploy_key
-- go get -u github.com/Masterminds/glide
 install:
-- glide install
+- godep restore
 script:
 - ./scriptw pack
 deploy:

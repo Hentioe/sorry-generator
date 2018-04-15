@@ -49,6 +49,23 @@ func (s *Server) Run() error {
 			}
 		}
 	})
+	router.POST("/upload/res", func(c *gin.Context) {
+		if file, err := c.FormFile("file"); err != nil {
+			c.JSON(http.StatusInternalServerError, err)
+		} else {
+			if err := c.SaveUploadedFile(file, "./tmp"+"/"+file.Filename); err != nil {
+				c.JSON(http.StatusInternalServerError, err)
+			} else {
+				if files, err := InstallZip("./tmp/"+file.Filename, "./resources"); err != nil {
+					c.JSON(http.StatusInternalServerError, err)
+				} else {
+					c.JSON(http.StatusOK, map[string]interface{}{
+						"make_files": files,
+					})
+				}
+			}
+		}
+	})
 
 	return router.Run(s.bind)
 }
