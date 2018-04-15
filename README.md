@@ -27,7 +27,7 @@ docker run -ti --name sorry-gen \
 bluerain/sorry-generator
 ````
 
-对 Docker 容器的附加解释：容器在启动时会持久化 `/data/tmp` 中的文件到 VOLUME，当前这个目录会存放通过上传接口上传的资源包。
+附加解释：容器在启动时会持久化 `/data/tmp` 中的文件到 VOLUME，当前这个目录会存放通过上传接口上传的资源包。
 
 
 程序默认绑定到 `:8080`，以 `test` 模式启动，若要更改需要手动添加 CLI 参数：
