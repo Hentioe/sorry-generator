@@ -1,4 +1,0 @@
-package: github.com/Hentioe/sorry-generator
-import:
-- package: github.com/emicklei/go-restful
-  version: v2.6.0
