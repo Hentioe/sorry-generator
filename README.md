@@ -9,7 +9,7 @@
 
 本项目为`Sorry-为所欲为`系列视频/GIF 生成器，配套前端：https://sorry.bluerain.io
 
-PS：灵感和资源模板来自 [xtyxtyx/sorry](https://github.com/xtyxtyx/sorry) 感谢：）
+PS：灵感和部分资源模板来自 [xtyxtyx/sorry](https://github.com/xtyxtyx/sorry) 感谢：）
 
 #### 使用
 
