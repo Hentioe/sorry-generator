@@ -16,12 +16,28 @@ PS：灵感和资源模板来自 [xtyxtyx/sorry](https://github.com/xtyxtyx/sorr
 在有 Docker 的系统上直接执行下列命令即可（注意端口映射和挂载目录）：
 
 ```` bash
+# 创建 sorry-tenerator 容器的 VOLUME
+docker volume create tmp-sorry-gen
+# 启动容器
 docker run -ti --name sorry-gen \
 -d -p 4008:8080 --restart=always \
+-v tmp-sorry-gen:/data/tmp
 -v /data/apps/sorry-generator/resources:/data/resources \
 -v /data/apps/sorry-generator/dist:/data/dist \
 bluerain/sorry-generator
 ````
+
+对 Docker 容器的附加解释：容器在启动时会持久化 /data/tmp 中的文件到 VOLUME，当前这个目录会存放通过上传接口上传的资源包。
+
+
+程序默认绑定到 :8080，以 test 模式启动，若要更改需要手动添加 CLI 参数：
+
+````
+./sorry-gen -bind :80 -mode relese
+````
+
+容器启动同样的直接将参数加在镜像后面。
+
 
 注意：从 0.3 版本开始模板资源不会集成在项目或者 Docker 镜像中，需要自行安装【看[这里](#安装资源)】。
 

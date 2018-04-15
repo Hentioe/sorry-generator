@@ -1,11 +1,12 @@
 FROM jrottenberg/ffmpeg:3.3
 
 
-ARG TAG=0.4.0
+ARG TAG=0.4.1
 ARG FILE_NAME=sorry-gen.tar.gz
 ARG DL_ADDRESS="https://github.com/Hentioe/sorry-generator/releases/download/$TAG/$FILE_NAME"
 ARG REMOTE_RES=https://dl.bluerain.io/res.zip
 ARG DIST_DIR=/data/dist
+ARG TMP_DIR=/data/tmp
 
 
 WORKDIR /data
@@ -24,6 +25,9 @@ RUN apt-get install -y wget ttf-wqy-microhei \
 
 
 EXPOSE 8080
+
+
+VOLUME $TMP_DIR
 
 
 ENTRYPOINT ["sorry-gen"]

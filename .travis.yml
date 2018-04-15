@@ -7,6 +7,7 @@ before_install:
 - chmod 600 github_deploy_key
 - eval $(ssh-agent -s)
 - ssh-add github_deploy_key
+- go get github.com/tools/godep
 install:
 - godep restore
 script:
