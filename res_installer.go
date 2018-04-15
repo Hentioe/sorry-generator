@@ -14,7 +14,7 @@ import (
 
 func InstallZip(src string, dest string) ([]string, error) {
 
-	var fileNames []string
+	fileNames := []string{}
 
 	if exist, err := IsAllExist(src, dest); !exist {
 		return fileNames, err

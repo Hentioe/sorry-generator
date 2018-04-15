@@ -32,8 +32,8 @@ func GenerateResource(tplKey string, subs Subs, resType string) (hash string, er
 		} else {
 			tplText = string(tmpBuf)
 		}
-		t := template.New("subTitle")
-		if t, err = t.Parse(tplText); err != nil {
+		tpl := template.New("subTitle")
+		if tpl, err = tpl.Parse(tplText); err != nil {
 			return
 		} else {
 			if f, err := os.Create(subOutputFile); err != nil {
@@ -42,7 +42,7 @@ func GenerateResource(tplKey string, subs Subs, resType string) (hash string, er
 				data := map[string][]string{
 					"sentences": subs.EntrySet(),
 				}
-				if err = t.Execute(f, data); err != nil {
+				if err = tpl.Execute(f, data); err != nil {
 					return hash, err
 				}
 			}
