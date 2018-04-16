@@ -14,11 +14,9 @@ WORKDIR /data
 
 RUN apt-get install -y ttf-wqy-microhei \
     && mkdir -p $DIST_DIR \
-    && wget $DL_ADDRESS -O "/data/$FILE_NAME" \
     && tar -zxvf $FILE_NAME \
     && ln -s /data/sorry-gen /usr/bin/sorry-gen \
     && rm "/data/$FILE_NAME" \
-    && apt-get purge -y wget \
     && apt-get autoremove -y \
     && rm -rf /var/lib/apt/lists/* \
     && rm -rf /var/lib/apt/lists/partial/*
