@@ -6,7 +6,7 @@ ARG DIST_DIR=/data/dist
 ARG TMP_DIR=/data/tmp
 
 
-COPY $FILE_NAME /data/
+COPY "build/$FILE_NAME" /data/
 
 
 WORKDIR /data
