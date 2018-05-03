@@ -1,8 +1,9 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
 
 type Server struct {
@@ -10,6 +11,7 @@ type Server struct {
 	router *gin.Engine
 }
 
+// Run 启动 web 服务
 func (s *Server) Run() error {
 	router := s.router
 
@@ -48,6 +50,28 @@ func (s *Server) Run() error {
 				})
 			}
 		}
+	})
+	router.POST("/task/generate/:tpl_key", func(c *gin.Context) {
+		tplKey := c.Param("tpl_key")
+		body := map[string][]string{}
+		if err := c.ShouldBindJSON(&body); err != nil {
+			c.JSON(http.StatusInternalServerError, err)
+		} else {
+			subs := Subs{}
+			subs.Append(body["sentences"])
+			hash := addMakeTask(Task{RunnableList: []makeFunc{MakeMp4, MakeGif}, TplKey: tplKey, Subs: subs})
+			c.JSON(http.StatusOK, map[string]interface{}{
+				"hash":  hash,
+				"state": taskState[hash],
+			})
+		}
+	})
+	router.GET("/task/generate/:hash", func(c *gin.Context) {
+		hash := c.Param("hash")
+		c.JSON(http.StatusOK, map[string]interface{}{
+			"hash":  hash,
+			"state": loadTaskState(hash),
+		})
 	})
 	router.POST("/upload/res", func(c *gin.Context) {
 		if file, err := c.FormFile("file"); err != nil {

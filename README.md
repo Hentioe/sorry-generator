@@ -20,7 +20,7 @@ PS：灵感和部分资源模板来自 [xtyxtyx/sorry](https://github.com/xtyxty
 docker volume create tmp-sorry-gen
 # 启动容器
 docker run -ti --name sorry-gen \
--d -p 4008:8080 --restart=always \
+-d -p 8080:8080 --restart=always \
 -v tmp-sorry-gen:/data/tmp
 -v /data/apps/sorry-generator/resources:/data/resources \
 -v /data/apps/sorry-generator/dist:/data/dist \
@@ -41,7 +41,7 @@ bluerain/sorry-generator
 
 注意：从 0.3 版本开始模板资源不会集成在项目或者 Docker 镜像中，需要自行安装【看[这里](#安装资源)】。
 
-POST 以下数据到 `http://localhost:4008/generate/sorry/mp4`:
+POST 以下数据到 `http://localhost:8080/generate/sorry/mp4`:
 
 ````
 {"sentences":["第一句","第二句","第三句","第四句","第五句","第六句","第七句","第八句","第九句"]}
@@ -72,7 +72,7 @@ server {
         }
 }
 ````
-那么就可以直接提供生成文件的直链了：http://your.domain/dist/$hash.[mp4|gif]
+那么就可以直接提供生成文件的直链了：http://your.domain/dist/{hash}.[mp4|gif]
 
 
 对模板资源的数据进行查询：
@@ -83,27 +83,27 @@ GET 访问首页 `http://localhost:4008`:
 
 ````
 {
-  "res": [
-   {
-    "tpl_key": "dagong",
-    "name": "窃格瓦拉-打工是不可能……",
-    "sentences": [],
-    "sentences_count": 6
-   },
-   {
-    "tpl_key": "sorry",
-    "name": "为所欲为",
-    "sentences": [],
-    "sentences_count": 9
-   },
-   {
-    "tpl_key": "wangjingze",
-    "name": "王境泽-真香",
-    "sentences": [],
-    "sentences_count": 4
-   }
-  ],
-  "res_count": 3
+    "res": [
+        {
+            "tpl_key": "dagong",
+            "name": "窃格瓦拉-打工是不可能……",
+            "sentences": [],
+            "sentences_count": 6
+        },
+        {
+            "tpl_key": "sorry",
+            "name": "为所欲为",
+            "sentences": [],
+            "sentences_count": 9
+        },
+        {
+            "tpl_key": "wangjingze",
+            "name": "王境泽-真香",
+            "sentences": [],
+            "sentences_count": 4
+        }
+    ],
+    "res_count": 3
  }
 ````
 会得到一个 res 数组，其中 tpl_key 就是模板名称，也就是上面的 sorry。sentences_count 表示有多少条字幕（需要输入多少句子）。sentences 数组是预设在程序中的默认字幕（用处例如提供前端输入框默认的 plachholder 的值）。以上所有数据都是程序扫描资源目录产生的结果，没有任何数据库成分。所以只要添加新的资源模板，API 结果会自动变更。
@@ -112,10 +112,10 @@ GET 访问首页 `http://localhost:4008`:
 
 ````
 {
-  "tpl_key": "sorry",
-  "name": "为所欲为",
-  "sentences": [],
-  "sentences_count": 9
+    "tpl_key": "sorry",
+    "name": "为所欲为",
+    "sentences": [],
+    "sentences_count": 9
  }
 ````
 
@@ -163,6 +163,62 @@ curl -X POST http://localhost:8080/upload/res \
 
 如果安装的资源包中的资源已经存在，则不会生成任何文件（在安装资源包章节有详细描述）。假设上传的资源包中仅仅只有一个 sorry 资源，
 在已经存在 sorry 的情况下，API 会返回一个空的 make_files。
+
+异步任务和并发限制：
+
+````
+./sorry-gen -cl <number>
+````
+cl 参数即 Concurrency limits（并发限制），默认限制为 CPU 数量。需要注意的是，此限制并不对 `/generate/{tpl_key}/{res_type}` API 生效。这个参数影响的是生成异步任务的 API: `/task/generate/{tpl_key}`。
+
+使用方式：
+
+POST `http://localhost:8080/task/generate/sorry`
+
+````
+{"sentences":["第一句","第二句","第三句","第四句","第五句","第六句","第七句","第八句","第九句"]}
+````
+
+会立即返回：
+
+````
+{
+    "hash": "776168419d55d4fe68792a73f6450791",
+    "state": "waitting"
+}
+````
+
+hash 表示产生的任务 ID（同时也表示产生的资源名称），state 表示当前任务状态。一般来讲调用此 API 的 state 状态都是 waitting，因为此 API 只会创建生成任务并立即返回资源 ID 并不会等到任务执行完毕才返回。
+
+根据上面产生的 ID 来获取最新的任务状态：
+
+GET `http://localhost:8080/task/generate/776168419d55d4fe68792a73f6450791`
+
+````
+{
+"hash": "776168419d55d4fe68792a73f6450791",
+"state": "completed"
+}
+````
+
+当 state 为 completed 时，任务已经执行结束了，而不再是创建时的等待状态，这时候相应资源已经生成（包含 .gif 和 .mp4）完成，可以直接根据 ID 下载。
+
+所有状态常量：
+
+```` golang
+const (
+	// StateWaiting 等待状态（添加后默认）
+	StateWaiting = "waitting"
+	// StateCompleted 完成状态
+	StateCompleted = "completed"
+	// StateError 失败状态
+	StateError = "failed"
+	// StateNone 空状态（没有构建任务）
+	StateNone = "none"
+)
+````
+
+添加对异步任务和对其的并发限制支持的目的是，当遇到大量用户并发使用的场景的时候可以通过异步任务 API 解决响应延迟以及服务器资源紧张问题。
 
 
 附加说明：
@@ -322,7 +378,7 @@ PS: 有关视频字幕的制作建议了解一下 [Aegisub](http://www.aegisub.o
 - [x] v0.2: 添加基于对模板资源扫描产生数据的查询相关的 API
 - [x] v0.3: 程序本体和模板资源分离
 - [x] v0.4: 提供上传接口并持久化储存新增的模板（固定结构的压缩包资源）
-- [ ] v1.0: 异步支持，对资源的生成请求立即响应，并提供查询接口返回任务实时状态
+- [x] v1.0: 异步支持，对资源的生成请求立即响应，并提供查询接口返回任务实时状态
 - [ ] v1.1: 回调支持，异步生成请求的任务完成主动触发 HookUrl
 - [ ] v1.2: 基于可控长度队列任务控制并发
 

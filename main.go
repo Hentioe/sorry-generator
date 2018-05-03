@@ -1,6 +1,7 @@
 package main
 
 import (
+	"runtime"
 	"os"
 	"path/filepath"
 	"log"
@@ -22,9 +23,10 @@ func init() {
 	}
 }
 
-var bind = flag.String("bind", ":8080", "Bind address and port")
-var installRes = flag.String("i", "", "Install resources for a zip file")
-var mode = flag.String("mode", "test", "Running mode, e.g. debug/test/release")
+var bind = flag.String("bind", ":8080", "bind address and port")
+var installRes = flag.String("i", "", "install resources for a zip file")
+var mode = flag.String("mode", "test", "running mode, e.g. debug/test/release")
+var cl = flag.Int("cl", runtime.NumCPU(), "concurrency limits")
 
 func main() {
 	flag.Parse()
@@ -38,5 +40,6 @@ func main() {
 	}
 	gin.SetMode(*mode)
 	server := Server{router: gin.Default(), bind: *bind}
+	go asyncMakeAction()
 	log.Fatal(server.Run())
 }
