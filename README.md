@@ -196,8 +196,8 @@ GET `http://localhost:8080/task/generate/776168419d55d4fe68792a73f6450791`
 
 ````
 {
-"hash": "776168419d55d4fe68792a73f6450791",
-"state": "completed"
+    "hash": "776168419d55d4fe68792a73f6450791",
+    "state": "completed"
 }
 ````
 
@@ -208,7 +208,7 @@ GET `http://localhost:8080/task/generate/776168419d55d4fe68792a73f6450791`
 ```` golang
 const (
 	// StateWaiting 等待状态（添加后默认）
-	StateWaiting = "waitting"
+	StateWaiting = "waiting"
 	// StateCompleted 完成状态
 	StateCompleted = "completed"
 	// StateError 失败状态

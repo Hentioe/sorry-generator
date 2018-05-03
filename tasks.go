@@ -6,7 +6,7 @@ import (
 
 const (
 	// StateWaiting 等待状态（添加后默认）
-	StateWaiting = "waitting"
+	StateWaiting = "waiting"
 	// StateCompleted 完成状态
 	StateCompleted = "completed"
 	// StateError 失败状态
@@ -26,8 +26,6 @@ var taskChan = make(chan Task, *cl)
 
 // 储存任务状态的 map
 var taskState = make(map[string]string)
-
-var wg sync.WaitGroup
 
 // Task 添加到队列的任务结构体
 type Task struct {
