@@ -1,7 +1,6 @@
 package main
 
 import (
-	"runtime"
 	"sync"
 )
 
@@ -23,10 +22,12 @@ var updateTaskStateMutex sync.Mutex
 var loadTaskStateMutex sync.Mutex
 
 // 执行任务的缓冲通道
-var taskChan = make(chan Task, runtime.NumCPU())
+var taskChan = make(chan Task, *cl)
 
 // 储存任务状态的 map
 var taskState = make(map[string]string)
+
+var wg sync.WaitGroup
 
 // Task 添加到队列的任务结构体
 type Task struct {
@@ -40,7 +41,9 @@ type makeFunc func(string, Subs) (string, error)
 
 // addMakeTask 添加一个生成任务
 func addMakeTask(task Task) string {
-	taskChan <- task
+	go func() {
+		taskChan <- task
+	}()
 	hash := task.Subs.Hash(task.TplKey)
 	updateTaskState(hash, StateWaiting)
 	return hash
@@ -75,18 +78,17 @@ func loadTaskState(hash string) (state string) {
 // asyncMakeAction 异步生成任务启动
 // goroutine 函数
 func asyncMakeAction() {
-next:
 	for {
 		task := <-taskChan
 		var curTaskHash string
+		var err error
 		for _, f := range task.RunnableList {
-			if hash, err := f(task.TplKey, task.Subs); err != nil {
-				updateTaskState(hash, StateError)
-				continue next
-			}else{
-				curTaskHash = hash
-			}
+			curTaskHash, err = f(task.TplKey, task.Subs)
 		}
-		updateTaskState(curTaskHash, StateCompleted)
+		if err != nil {
+			updateTaskState(curTaskHash, StateError)
+		} else {
+			updateTaskState(curTaskHash, StateCompleted)
+		}
 	}
 }

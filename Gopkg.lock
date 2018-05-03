@@ -16,7 +16,13 @@
     "json",
     "render"
   ]
-  revision = "6d913fc343cfac80d656db5be67a0ffb1323ba0d"
+  revision = "bd4f73af679e7d645f6d0277258fa360eda96f2d"
+
+[[projects]]
+  name = "github.com/go-resty/resty"
+  packages = ["."]
+  revision = "f8815663de1e64d57cdd4ee9e2b2fa96977a030e"
+  version = "v1.4"
 
 [[projects]]
   name = "github.com/golang/protobuf"
@@ -53,9 +59,39 @@
 
 [[projects]]
   branch = "master"
+  name = "golang.org/x/net"
+  packages = [
+    "idna",
+    "publicsuffix"
+  ]
+  revision = "640f4622ab692b87c2f3a94265e6f579fe38263d"
+
+[[projects]]
+  branch = "master"
   name = "golang.org/x/sys"
   packages = ["unix"]
   revision = "2281fa97ef7b0c26324634d5a22f04babdac8713"
+
+[[projects]]
+  name = "golang.org/x/text"
+  packages = [
+    "collate",
+    "collate/build",
+    "internal/colltab",
+    "internal/gen",
+    "internal/tag",
+    "internal/triegen",
+    "internal/ucd",
+    "language",
+    "secure/bidirule",
+    "transform",
+    "unicode/bidi",
+    "unicode/cldr",
+    "unicode/norm",
+    "unicode/rangetable"
+  ]
+  revision = "f21a4dfb5e38f5895301dc265a8def02365cc3d0"
+  version = "v0.3.0"
 
 [[projects]]
   name = "gopkg.in/go-playground/validator.v8"
@@ -71,6 +107,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "e1f0c2ba8c8dd565516f5cc77646eeadafed2477e851e38ca9d8027f5369bd4e"
+  inputs-digest = "246081390a4d34ea4126f5d700342d9985d3b1b3117a4a6e9281eba5c636f016"
   solver-name = "gps-cdcl"
   solver-version = 1

@@ -1,12 +1,13 @@
 package main
 
 import (
-	"runtime"
+	"flag"
+	"fmt"
+	"log"
 	"os"
 	"path/filepath"
-	"log"
-	"fmt"
-	"flag"
+	"runtime"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -40,6 +41,8 @@ func main() {
 	}
 	gin.SetMode(*mode)
 	server := Server{router: gin.Default(), bind: *bind}
-	go asyncMakeAction()
+	for i := 0; i < *cl; i++ {
+		go asyncMakeAction()
+	}
 	log.Fatal(server.Run())
 }
