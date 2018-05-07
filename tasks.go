@@ -15,11 +15,8 @@ const (
 	StateNone = "none"
 )
 
-// 更新任务状态的互斥锁
-var updateTaskStateMutex sync.Mutex
-
-// 读取任务状态的互斥锁
-var loadTaskStateMutex sync.Mutex
+// 保护任务状态的互斥量
+var taskStateMutex sync.Mutex
 
 // 执行任务的缓冲通道
 var taskChan = make(chan Task, *cl)
@@ -50,17 +47,17 @@ func addMakeTask(task Task) string {
 // updateTaskState 更新任务状态
 // 状态更新操作加锁
 func updateTaskState(hash, state string) {
-	updateTaskStateMutex.Lock()
+	taskStateMutex.Lock()
 	{
 		taskState[hash] = state
 	}
-	updateTaskStateMutex.Unlock()
+	taskStateMutex.Unlock()
 }
 
 // loadTaskState 读取任务状态
 // 状态更新操作加锁
 func loadTaskState(hash string) (state string) {
-	loadTaskStateMutex.Lock()
+	taskStateMutex.Lock()
 	{
 		resultState, exists := taskState[hash]
 		if !exists {
@@ -69,7 +66,7 @@ func loadTaskState(hash string) (state string) {
 			state = resultState
 		}
 	}
-	loadTaskStateMutex.Unlock()
+	taskStateMutex.Unlock()
 	return
 }
 
