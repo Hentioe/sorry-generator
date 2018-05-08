@@ -48,25 +48,23 @@ func addMakeTask(task Task) string {
 // 状态更新操作加锁
 func updateTaskState(hash, state string) {
 	taskStateMutex.Lock()
-	{
-		taskState[hash] = state
-	}
-	taskStateMutex.Unlock()
+	defer taskStateMutex.Unlock()
+
+	taskState[hash] = state
 }
 
 // loadTaskState 读取任务状态
 // 状态更新操作加锁
 func loadTaskState(hash string) (state string) {
 	taskStateMutex.Lock()
-	{
-		resultState, exists := taskState[hash]
-		if !exists {
-			state = StateNone
-		} else {
-			state = resultState
-		}
+	defer taskStateMutex.Unlock()
+
+	resultState, exists := taskState[hash]
+	if !exists {
+		state = StateNone
+	} else {
+		state = resultState
 	}
-	taskStateMutex.Unlock()
 	return
 }
 
