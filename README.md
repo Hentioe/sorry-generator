@@ -188,7 +188,7 @@ POST `http://localhost:8080/task/generate/sorry`
 }
 ````
 
-hash 表示产生的任务 ID（同时也表示产生的资源名称），state 表示当前任务状态。一般来讲调用此 API 的 state 状态都是 waitting，因为此 API 只会创建生成任务并立即返回资源 ID 并不会等到任务执行完毕才返回。
+hash 表示产生的任务 ID（同时也表示产生的资源名称），state 表示当前任务状态。一般来讲调用此 API 的 state 状态都是 waiting，因为此 API 只会创建生成任务并立即返回资源 ID 并不会等到任务执行完毕才返回。
 
 根据上面产生的 ID 来获取最新的任务状态：
 
