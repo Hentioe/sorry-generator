@@ -1,3 +1,8 @@
+# 此项目停止维护已久，请看此
+
+1. 请访问重置版本：[Hentioe/zhenxiang](https://github.com/Hentioe/zhenxiang)
+1. 重置版本将继续提供免费的公共服务：）
+
 # sorry-generator
 
 ![Travis](https://travis-ci.org/Hentioe/sorry-generator.svg?branch=master)
